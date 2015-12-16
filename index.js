@@ -5,20 +5,19 @@ const pwd = path.join(__dirname, '..', '/.env');
 require('dotenv').config({path: pwd});
 
 const seneca = require('seneca')();
-const myModule = require('./lib/module');
+const messages = require('./lib/messages');
 const database = require('./lib/database');
 
 
 // select desired transport method
 const transportMethod = process.env['SENECA_TRANSPORT_METHOD'] || 'rabbitmq';
-const patternPin = 'role:user';
+const patternPin = 'role:messenger';
 
 // init database and then seneca and expose functions
 database.connect()
     .then(() => {
         seneca
             .use(transportMethod + '-transport')
-            .add(patternPin + ',cmd:login', myModule.doSomething)
-            .add(patternPin + ',cmd:else', myModule.doSomethingElse)
+            .add(patternPin + ',cmd:newmessage', messages.newMessage)
             .listen({type: transportMethod, pin: patternPin});
     });

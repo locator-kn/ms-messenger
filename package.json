@@ -1,7 +1,7 @@
 {
-  "name": "ms-sample",
+  "name": "ms-messenger",
   "version": "1.0.0",
-  "description": "microservice sample",
+  "description": "messenger microservice",
   "main": "index.js",
   "scripts": {
     "test": "ava",
