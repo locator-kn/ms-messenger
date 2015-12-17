@@ -19,6 +19,6 @@ database.connect()
         seneca
             .use(transportMethod + '-transport')
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
-            .add(patternPin + ',cmd:newmessage,message_type:video', messages.newVideoMessage)
+            .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
             .listen({type: transportMethod, pin: patternPin});
     });
