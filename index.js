@@ -18,6 +18,7 @@ database.connect()
     .then(() => {
         seneca
             .use(transportMethod + '-transport')
-            .add(patternPin + ',cmd:newmessage', messages.newMessage)
+            .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
+            .add(patternPin + ',cmd:newmessage,message_type:video', messages.newVideoMessage)
             .listen({type: transportMethod, pin: patternPin});
     });
