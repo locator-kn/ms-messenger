@@ -18,6 +18,17 @@
   },
   "devDependencies": {
     "ava": "^0.7.0",
+    "nyc": "^5.0.1",
     "proxyquire": "^1.7.3"
+  },
+  "config": {
+    "nyc": {
+      "exclude": [
+        "**/*.stub.js",
+        "**/database.js",
+        "test",
+        "test{,-*}.js"
+      ]
+    }
   }
 }
