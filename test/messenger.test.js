@@ -5,7 +5,7 @@ const proxyquire =  require('proxyquire');
 const databaseStub = require('./stubs/database.stub');
 const messages = proxyquire('../lib/messages', { './database': databaseStub });
 
-test('module.newTextMessage', t => {
+test('messages.newTextMessage', t => {
     messages.newTextMessage({
         role: 'messenger',
         cmd: 'newmessage',
@@ -16,14 +16,12 @@ test('module.newTextMessage', t => {
             'from': '012bb2568b1842959293402b06b3681b'
         }
     }, (err, data) => {
-        if(err) {
-            return t.fail();
-        }
-        t.pass();
+        t.is(null, err);
+        t.is(data._id, '5673ee68d3f839675dc860ec');
     });
 });
 
-test('module.newLocationMessage', t => {
+test('messages.newLocationMessage', t => {
     messages.newLocationMessage({
         role: 'messenger',
         cmd: 'newmessage',
@@ -34,10 +32,7 @@ test('module.newLocationMessage', t => {
             'from': '012bb2568b1842959293402b06b3681b'
         }
     }, (err, data) => {
-        if(err) {
-            return t.fail();
-        }
-
-        t.ok(data);
+        t.is(null, err);
+        t.is(data._id, '5673ee68d3f839675dc860ec');
     });
 });
