@@ -20,5 +20,5 @@ database.connect()
             .use(transportMethod + '-transport')
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
-            .listen({type: transportMethod, pin: patternPin});
+            .listen({type: transportMethod});
     });
