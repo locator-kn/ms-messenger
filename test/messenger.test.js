@@ -50,3 +50,11 @@ test('conversations.newConversation with 2 participants', t => {
         t.same(expected, data);
     });
 });
+
+test('conversations.newConversation with 2 participants but missing user_id', t => {
+    conversations.newConversation(conversationFixtures.twoParticipantsMissingUserId, (err, data) => {
+
+        t.is('ValidationError', err.name);
+        t.is(void 0, data);
+    });
+});
