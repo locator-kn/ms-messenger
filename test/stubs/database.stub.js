@@ -20,4 +20,15 @@ fns.findConversationsByUser = (query) => {
 };
 
 
+fns.findById = (id, collectionId) => {
+    console.log(id, conversationFixtures.getConversationByIdResponse._id);
+    if(conversationFixtures.getConversationByIdResponse._id === id) {
+
+        return Promise.resolve([conversationFixtures.getConversationByIdResponse]);
+    } else {
+        return Promise.resolve([]);
+    }
+};
+
+
 module.exports = fns;
