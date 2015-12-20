@@ -23,12 +23,6 @@ database.connect()
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
             .add(patternPin + ',cmd:newconversation', conversations.newConversation)
             .add(patternPin + ',cmd:getconversationbyuser', conversations.getConversationsByUserId)
-            //.act({
-            //    role: 'messenger',
-            //    cmd: 'getconversationbyuser',
-            //    data: {
-            //        'user_id': '11a2ae383bf25eefde31b13860842353'
-            //    }
-            //})
+            .add(patternPin + ',cmd:getconversationbyid', conversations.getConversationById)
             .listen({type: transportMethod});
     });
