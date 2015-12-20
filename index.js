@@ -22,7 +22,16 @@ database.connect()
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
             .add(patternPin + ',cmd:newconversation', conversations.newConversation)
-            .add(patternPin + ',cmd:getconversationbyuser', conversations.getConversationsByUserId)
+            .add(patternPin + ',cmd:getconversationsbyuser', conversations.getConversationsByUserId)
             .add(patternPin + ',cmd:getconversationbyid', conversations.getConversationById)
+            /*.act({
+                role: 'messenger',
+                cmd: 'getconversationbyid',
+                data: {
+                    'conversation_id': '11a2ae383bf25eefde31b138608424ad'
+                }
+            }, function() {
+                console.log(JSON.stringify(arguments[1]));
+            })*/
             .listen({type: transportMethod});
     });
