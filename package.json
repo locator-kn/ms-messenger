@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "ava",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc --all npm test && nyc report --reporter=text-lcov | coveralls",
     "documentation": "documentation index.js -o docs/ -f html -g",
     "gendocs": "./generate_docs.sh"
   },
