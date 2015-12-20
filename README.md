@@ -1,6 +1,7 @@
 # ms-messenger
 
 [![Dependencies][david-badge]][david-url]
+[![Build Status](https://travis-ci.org/locator-kn/ms-messenger.svg?branch=master)](https://travis-ci.org/locator-kn/ms-messenger)
 
 This service will be a small part of [locator-app.com](https://locator-app.com) 2.0
 
