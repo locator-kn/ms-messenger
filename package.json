@@ -29,8 +29,12 @@
       "exclude": [
         "**/*.stub.js",
         "**/database.js",
+        "index.js",
         "test",
         "test{,-*}.js"
+      ],
+      "include": [
+        "**/*.js"
       ]
     }
   }
