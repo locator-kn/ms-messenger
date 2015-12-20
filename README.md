@@ -1,6 +1,6 @@
 # ms-messenger
 
-![Dependencies][david-badge]
+[![Dependencies][david-badge]][david-url]
 
 This service will be a small part of [locator-app.com](https://locator-app.com) 2.0
 
@@ -27,3 +27,4 @@ At locator we plan a simple microservice architecture which communicates (among 
 
 
 [david-badge]: https://david-dm.org/locator-kn/ms-messenger.svg
+[david-url]: https://david-dm.org/locator-kn/ms-messenger
