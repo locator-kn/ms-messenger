@@ -4,8 +4,10 @@ const proxyquire =  require('proxyquire');
 
 const databaseStub = require('./stubs/database.stub');
 const messageFixtures = require('./fixture/messages');
+const conversationFixtures = require('./fixture/conversations');
 
 const messages = proxyquire('../lib/messages', { './database': databaseStub });
+const conversations = proxyquire('../lib/conversations', { './database': databaseStub });
 
 test('messages.newTextMessage', t => {
     messages.newTextMessage(messageFixtures.textMessagePass, (err, data) => {
@@ -32,5 +34,20 @@ test('messages.newLocationMessage with text message', t => {
     messages.newLocationMessage(messageFixtures.textMessagePass, (err, data) => {
         t.is('ValidationError', err.name);
         t.is(void 0, data);
+    });
+});
+
+// Conversations
+
+test('conversations.newConversation with 2 participants', t => {
+    console.log('starting con test');
+    conversations.newConversation(conversationFixtures.twoParticipants, (err, data) => {
+        let expected = conversationFixtures.twoParticipants.data;
+        expected.participants[1].last_read = 0;
+        expected._id = '5673ee68d3f839675dc860ec';
+
+        t.notOk(err);
+        t.ok(data);
+        t.same(expected, data);
     });
 });
