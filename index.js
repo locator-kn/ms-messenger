@@ -22,7 +22,7 @@ database.connect()
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
             .add(patternPin + ',cmd:newconversation', conversations.newConversation)
-            .add(patternPin + ',cmd:getconversationbyuser', conversations.getConversationByUserId)
+            .add(patternPin + ',cmd:getconversationbyuser', conversations.getConversationsByUserId)
             //.act({
             //    role: 'messenger',
             //    cmd: 'getconversationbyuser',
