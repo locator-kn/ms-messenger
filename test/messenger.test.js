@@ -74,3 +74,23 @@ test('conversations.getConversationsByUserId with invalid user_id', t => {
         t.is(void 0, data);
     });
 });
+
+test('conversations.getConversationById with valid conversation_id', t => {
+    conversations.getConversationById(conversationFixtures.getConversationByIdWithResult, (err, data) => {
+        t.is(conversationFixtures.getConversationByIdWithResult.data.conversation_id, data._id);
+    });
+});
+
+test('conversations.getConversationById with invalid conversation_id', t => {
+    conversations.getConversationById(conversationFixtures.getConversationByIdWithNoResult, (err, data) => {
+        t.is('Error', err.name);
+        t.is(void 0, data);
+    });
+});
+
+test('conversations.getConversationById with crappy data', t => {
+    conversations.getConversationById({data: {crappy: 'data'}}, (err, data) => {
+        t.is('ValidationError', err.name);
+        t.is(void 0, data);
+    });
+});
