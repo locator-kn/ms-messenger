@@ -28,7 +28,7 @@ fixtures.twoParticipantsMissingUserId = {
 };
 
 fixtures.conversationsUserId = {
-    data:{
+    data: {
         user_id: '11a2ae383bf25eefde31b13860842353'
     },
     cmd: 'getconversationbyuser',
@@ -68,6 +68,32 @@ fixtures.getConversationsResponse = [{
         'last_read': 123123123
     }, {'user_id': '11a2ae383bf25eefde31b13860842353', 'last_read': 0}]
 }];
+
+
+fixtures.getConversationByIdWithResult = {
+    role: 'messenger',
+    cmd: 'getconversationbyid',
+    data: {
+        'conversation_id': '11a2ae383bf25eefde31b138608424ad'
+    }
+};
+fixtures.getConversationByIdWithNoResult = {
+    role: 'messenger',
+    cmd: 'getconversationbyid',
+    data: {
+        'conversation_id': 'qwertz'
+    }
+};
+
+fixtures.getConversationByIdResponse = {
+    '_id': '11a2ae383bf25eefde31b138608424ad',
+    'create_date': '2015-07-30T19:31:45.740Z',
+    'modified_date': '2015-07-30T19:32:15.864Z',
+    'participants': [{'user_id': 'locator-app', 'last_read': 0}, {
+        'user_id': '11a2ae383bf25eefde31b13860842353',
+        'last_read': 0
+    }]
+};
 
 
 module.exports = fixtures;
