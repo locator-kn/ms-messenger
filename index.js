@@ -22,17 +22,13 @@ database.connect()
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
             .add(patternPin + ',cmd:newconversation', conversations.newConversation)
-            /*.act({
-                role: 'messenger',
-                cmd: 'newconversation',
-                data: {
-                    participants: [{
-                        'user_id': '11a2ae383bf25eefde31b13860842353',
-                        last_read: 123123123
-                    }, {
-                        'user_id': '11a2ae383bf25eefde31b13860842353'
-                    }]
-                }
-            })*/
+            .add(patternPin + ',cmd:getconversationbyuser', conversations.getConversationByUserId)
+            //.act({
+            //    role: 'messenger',
+            //    cmd: 'getconversationbyuser',
+            //    data: {
+            //        'user_id': '11a2ae383bf25eefde31b13860842353'
+            //    }
+            //})
             .listen({type: transportMethod});
     });
