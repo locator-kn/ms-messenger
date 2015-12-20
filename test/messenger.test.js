@@ -40,7 +40,6 @@ test('messages.newLocationMessage with text message', t => {
 // Conversations
 
 test('conversations.newConversation with 2 participants', t => {
-    console.log('starting con test');
     conversations.newConversation(conversationFixtures.twoParticipants, (err, data) => {
         let expected = conversationFixtures.twoParticipants.data;
         expected.participants[1].last_read = 0;
