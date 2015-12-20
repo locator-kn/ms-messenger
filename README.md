@@ -2,6 +2,7 @@
 
 [![Dependencies][david-badge]][david-url]
 [![Build Status](https://travis-ci.org/locator-kn/ms-messenger.svg?branch=master)](https://travis-ci.org/locator-kn/ms-messenger)
+[![Coverage Status](https://coveralls.io/repos/locator-kn/ms-messenger/badge.svg?branch=master&service=github)](https://coveralls.io/github/locator-kn/ms-messenger?branch=master)
 
 This service will be a small part of [locator-app.com](https://locator-app.com) 2.0
 
