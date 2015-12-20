@@ -6,6 +6,7 @@ require('dotenv').config({path: pwd});
 
 const seneca = require('seneca')();
 const messages = require('./lib/messages');
+const conversations = require('./lib/conversations');
 const database = require('./lib/database');
 
 
@@ -20,5 +21,18 @@ database.connect()
             .use(transportMethod + '-transport')
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
+            .add(patternPin + ',cmd:newconversation', conversations.newConversation)
+            /*.act({
+                role: 'messenger',
+                cmd: 'newconversation',
+                data: {
+                    participants: [{
+                        'user_id': '11a2ae383bf25eefde31b13860842353',
+                        last_read: 123123123
+                    }, {
+                        'user_id': '11a2ae383bf25eefde31b13860842353'
+                    }]
+                }
+            })*/
             .listen({type: transportMethod});
     });
