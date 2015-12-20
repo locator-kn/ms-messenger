@@ -58,3 +58,19 @@ test('conversations.newConversation with 2 participants but missing user_id', t 
         t.is(void 0, data);
     });
 });
+
+test('conversations.getConversationsByUserId with valid user_id', t => {
+    conversations.getConversationsByUserId(conversationFixtures.conversationsUserId, (err, data) => {
+
+        t.notOk(err);
+        t.is(data.length, conversationFixtures.getConversationsResponse.length);
+    });
+});
+
+test('conversations.getConversationsByUserId with invalid user_id', t => {
+    conversations.getConversationsByUserId({data: {wrong_key: 'guga'}}, (err, data) => {
+
+        t.is('ValidationError', err.name);
+        t.is(void 0, data);
+    });
+});
