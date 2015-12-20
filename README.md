@@ -1,5 +1,7 @@
 # ms-messenger
 
+![Dependencies][david-badge]
+
 This service will be a small part of [locator-app.com](https://locator-app.com) 2.0
 
 ## Installation
@@ -22,3 +24,6 @@ At locator we plan a simple microservice architecture which communicates (among 
 * running rabbitmq-server
 * running mongodb instance
 * .env file in parent folder.
+
+
+[david-badge]: https://david-dm.org/locator-kn/ms-messenger.svg
