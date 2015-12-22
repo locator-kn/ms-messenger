@@ -18,7 +18,7 @@ const patternPin = 'role:messenger';
 database.connect()
     .then(() => {
         seneca
-            .use(transportMethod + '-transport')
+            //.use(transportMethod + '-transport')
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
             .add(patternPin + ',cmd:getmessagesbyconversationid', messages.getMessagesByConversationId)
@@ -28,12 +28,16 @@ database.connect()
             .add(patternPin + ',cmd:getconversationbyid', conversations.getConversationById)
             /*.act({
                 role: 'messenger',
-                cmd: 'getconversationbyid',
+                cmd: 'latestmessages',
+                distict: 'conversation',
                 data: {
-                    'conversation_id': '11a2ae383bf25eefde31b138608424ad'
+                    'user_id': '567857f5de1d4c5a4fd81d03',
+                    'query': {
+                        count: 3
+                    }
                 }
             }, function() {
                 console.log(JSON.stringify(arguments[1]));
             })*/
-            .listen({type: transportMethod});
+            .listen({type: 'tcp', port: 7003, pin: 'role:messenger'});
     });
