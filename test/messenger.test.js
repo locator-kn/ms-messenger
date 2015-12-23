@@ -119,3 +119,12 @@ test('messages.getLatestMessagesByDistinctConversation without query', t => {
         t.true(data[0].timestamp > data[data.length - 1].timestamp);
     });
 });
+
+
+test('messages.getLatestMessagesByDistinctConversation with invalid query', t => {
+    messages.getLatestMessagesByDistinctConversation({data: {}}, (err, data) => {
+        t.ok(err);
+        t.is(err.name, 'ValidationError');
+
+    });
+});
