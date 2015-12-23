@@ -13,7 +13,7 @@ fns.insertOne = (message, collection) => {
 
 
 fns.findConversationsByUser = (query) => {
-    if (!conversationFixtures.conversationsUserId.data.user_id === query.user_id) {
+    if (conversationFixtures.conversationsUserId.data.user_id !== query.user_id) {
         return Promise.resolve([]);
     }
     return Promise.resolve(conversationFixtures.getConversationsResponse);
