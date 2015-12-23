@@ -38,6 +38,41 @@ test('messages.newLocationMessage with text message', t => {
     });
 });
 
+
+
+
+test('messages.getLatestMessagesByDistinctConversation with query', t => {
+    messages.getLatestMessagesByDistinctConversation(messageFixtures.latestMessagesWithCountQuery, (err, data) => {
+        t.notOk(err);
+
+        t.is(messageFixtures.latestMessagesWithCountQuery.data.query.count, data.length);
+        t.true(data[0].timestamp > data[1].timestamp);
+        t.true(data[0].timestamp > data[data.length - 1].timestamp);
+    });
+});
+
+
+test('messages.getLatestMessagesByDistinctConversation without query', t => {
+    let latest = Hoek.clone(messageFixtures.latestMessagesWithCountQuery);
+    delete latest.data.query;
+    messages.getLatestMessagesByDistinctConversation(latest, (err, data) => {
+        t.notOk(err);
+
+        t.is(3, data.length);
+        t.true(data[0].timestamp > data[1].timestamp);
+        t.true(data[0].timestamp > data[data.length - 1].timestamp);
+    });
+});
+
+
+test('messages.getLatestMessagesByDistinctConversation with invalid query', t => {
+    messages.getLatestMessagesByDistinctConversation({data: {}}, (err, data) => {
+        t.ok(err);
+        t.is(err.name, 'ValidationError');
+
+    });
+});
+
 // Conversations
 
 test('conversations.newConversation with 2 participants', t => {
@@ -93,38 +128,5 @@ test('conversations.getConversationById with crappy data', t => {
     conversations.getConversationById({data: {crappy: 'data'}}, (err, data) => {
         t.is('ValidationError', err.name);
         t.is(void 0, data);
-    });
-});
-
-
-test('messages.getLatestMessagesByDistinctConversation with query', t => {
-    messages.getLatestMessagesByDistinctConversation(messageFixtures.latestMessagesWithCountQuery, (err, data) => {
-        t.notOk(err);
-
-        t.is(messageFixtures.latestMessagesWithCountQuery.data.query.count, data.length);
-        t.true(data[0].timestamp > data[1].timestamp);
-        t.true(data[0].timestamp > data[data.length - 1].timestamp);
-    });
-});
-
-
-test('messages.getLatestMessagesByDistinctConversation without query', t => {
-    let latest = Hoek.clone(messageFixtures.latestMessagesWithCountQuery);
-    delete latest.data.query;
-    messages.getLatestMessagesByDistinctConversation(latest, (err, data) => {
-        t.notOk(err);
-
-        t.is(3, data.length);
-        t.true(data[0].timestamp > data[1].timestamp);
-        t.true(data[0].timestamp > data[data.length - 1].timestamp);
-    });
-});
-
-
-test('messages.getLatestMessagesByDistinctConversation with invalid query', t => {
-    messages.getLatestMessagesByDistinctConversation({data: {}}, (err, data) => {
-        t.ok(err);
-        t.is(err.name, 'ValidationError');
-
     });
 });
