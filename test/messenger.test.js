@@ -94,3 +94,14 @@ test('conversations.getConversationById with crappy data', t => {
         t.is(void 0, data);
     });
 });
+
+
+test('conversations.getLatestMessagesByDistinctConversation with query', t => {
+    messages.getLatestMessagesByDistinctConversation(messageFixtures.latestMessagesWithCountQuery, (err, data) => {
+        t.notOk(err);
+
+        t.is(messageFixtures.latestMessagesWithCountQuery.data.query.count, data.length);
+        t.true(data[0].timestamp > data[1].timestamp);
+        t.true(data[0].timestamp > data[data.length - 1].timestamp);
+    });
+});

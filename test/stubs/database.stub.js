@@ -2,6 +2,7 @@
 
 const fns = {};
 const conversationFixtures = require('../fixture/conversations');
+const messageFixtures = require('../fixture/messages');
 
 fns.insertOne = (message, collection) => {
     if (message.participants && message.participants.length) {
@@ -24,6 +25,16 @@ fns.findById = (id, collectionId) => {
     if(conversationFixtures.getConversationByIdResponse._id === id) {
 
         return Promise.resolve([conversationFixtures.getConversationByIdResponse]);
+    } else {
+        return Promise.resolve([]);
+    }
+};
+
+
+fns.findLatestMessagesByDistinctConversation = (user_id, query) => {
+    if(messageFixtures.latestMessagesWithCountQuery.data.user_id === user_id) {
+
+        return Promise.resolve(messageFixtures.latestMessagesWithCountResponse);
     } else {
         return Promise.resolve([]);
     }
