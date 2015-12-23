@@ -1,6 +1,7 @@
 'use strict';
 import test from 'ava';
 const proxyquire =  require('proxyquire');
+const Hoek = require('hoek');
 
 const databaseStub = require('./stubs/database.stub');
 const messageFixtures = require('./fixture/messages');
@@ -101,6 +102,19 @@ test('conversations.getLatestMessagesByDistinctConversation with query', t => {
         t.notOk(err);
 
         t.is(messageFixtures.latestMessagesWithCountQuery.data.query.count, data.length);
+        t.true(data[0].timestamp > data[1].timestamp);
+        t.true(data[0].timestamp > data[data.length - 1].timestamp);
+    });
+});
+
+
+test('conversations.getLatestMessagesByDistinctConversation without query', t => {
+    let latest = Hoek.clone(messageFixtures.latestMessagesWithCountQuery);
+    delete latest.data.query;
+    messages.getLatestMessagesByDistinctConversation(latest, (err, data) => {
+        t.notOk(err);
+
+        t.is(3, data.length);
         t.true(data[0].timestamp > data[1].timestamp);
         t.true(data[0].timestamp > data[data.length - 1].timestamp);
     });
