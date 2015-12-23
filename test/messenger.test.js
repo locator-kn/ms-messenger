@@ -39,6 +39,18 @@ test('messages.newLocationMessage with text message', t => {
 });
 
 
+test('messages.getMessagesByConversationId', t => {
+    messages.getMessagesByConversationId(messageFixtures.messagesByConversationIdQuery, (err, data) => {
+        t.notOk(err);
+    });
+});
+
+test('messages.getMessagesByConversationId with random query', t => {
+    messages.getMessagesByConversationId(messageFixtures.textMessagePass, (err, data) => {
+        t.is('ValidationError', err.name);
+        t.is(void 0, data);
+    });
+});
 
 
 test('messages.getLatestMessagesByDistinctConversation with query', t => {

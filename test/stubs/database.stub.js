@@ -30,6 +30,14 @@ fns.findById = (id, collectionId) => {
     }
 };
 
+fns.findMessagesByConversationId = (id) => {
+    if(messageFixtures.messagesByConversationIdQuery.data.conversation_id === id) {
+        return Promise.resolve([conversationFixtures.getConversationByIdResponse]);
+    } else {
+        return Promise.resolve([]);
+    }
+};
+
 
 fns.findLatestMessagesByDistinctConversation = (user_id, query) => {
     if(messageFixtures.latestMessagesWithCountQuery.data.user_id === user_id) {

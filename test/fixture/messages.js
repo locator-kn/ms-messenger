@@ -24,6 +24,14 @@ fixtures.textMessagePass = {
     }
 };
 
+fixtures.messagesByConversationIdQuery = {
+    role: 'messenger',
+    cmd: 'getmessagesbyconversationid',
+    data: {
+        'conversation_id': '012bb2568b1842959293402b06b42170'
+    }
+};
+
 fixtures.latestMessagesWithCountQuery = {
     role: 'messenger',
     cmd: 'latestmessages',
