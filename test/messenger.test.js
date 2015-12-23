@@ -97,7 +97,7 @@ test('conversations.getConversationById with crappy data', t => {
 });
 
 
-test('conversations.getLatestMessagesByDistinctConversation with query', t => {
+test('messages.getLatestMessagesByDistinctConversation with query', t => {
     messages.getLatestMessagesByDistinctConversation(messageFixtures.latestMessagesWithCountQuery, (err, data) => {
         t.notOk(err);
 
@@ -108,7 +108,7 @@ test('conversations.getLatestMessagesByDistinctConversation with query', t => {
 });
 
 
-test('conversations.getLatestMessagesByDistinctConversation without query', t => {
+test('messages.getLatestMessagesByDistinctConversation without query', t => {
     let latest = Hoek.clone(messageFixtures.latestMessagesWithCountQuery);
     delete latest.data.query;
     messages.getLatestMessagesByDistinctConversation(latest, (err, data) => {
