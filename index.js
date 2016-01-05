@@ -26,18 +26,17 @@ database.connect()
             .add(patternPin + ',cmd:newconversation', conversations.newConversation)
             .add(patternPin + ',cmd:getconversationsbyuser', conversations.getConversationsByUserId)
             .add(patternPin + ',cmd:getconversationbyid', conversations.getConversationById)
-            /*.act({
-                role: 'messenger',
-                cmd: 'latestmessages',
-                distict: 'conversation',
-                data: {
-                    'user_id': '567857f5de1d4c5a4fd81d03',
-                    'query': {
-                        count: 3
-                    }
-                }
-            }, function() {
-                console.log(JSON.stringify(arguments[1]));
-            })*/
+            .add(patternPin + ',cmd:ackConverstaion', conversations.ackConversation)
+            //.act({
+            //    role: 'messenger',
+            //    cmd: 'ackConverstaion',
+            //    data: {
+            //        'user_id': 'unknown',
+            //        'conversation_id': '568abfde30c3a96b1c7f4f63',
+            //        'last_read': Date.now()
+            //    }
+            //}, function(err, data) {
+            //    console.log(err || data);
+            //})
             .listen({type: 'tcp', port: 7003, pin: 'role:messenger'});
     });
