@@ -19,7 +19,7 @@ database.connect()
     .then(() => {
         seneca
         //.use(transportMethod + '-transport')
-            .client({type: 'tcp', port: 7010, pin: 'role:reporter'})
+            .client({type: 'tcp', port: 7010, host: 'localhost', pin: 'role:reporter'})
 
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
