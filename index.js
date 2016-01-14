@@ -8,7 +8,7 @@ const seneca = require('seneca')();
 const messages = require('./lib/messages');
 const conversations = require('./lib/conversations');
 const database = require('./lib/database');
-
+const util = require('ms-utilities');
 
 // select desired transport method
 const transportMethod = process.env['SENECA_TRANSPORT_METHOD'] || 'rabbitmq';
@@ -18,7 +18,9 @@ const patternPin = 'role:messenger';
 database.connect()
     .then(() => {
         seneca
-            //.use(transportMethod + '-transport')
+        //.use(transportMethod + '-transport')
+            .client({type: 'tcp', port: 7010, pin: 'role:reporter'})
+
             .add(patternPin + ',cmd:newmessage,message_type:text', messages.newTextMessage)
             .add(patternPin + ',cmd:newmessage,message_type:location', messages.newLocationMessage)
             .add(patternPin + ',cmd:getmessagesbyconversationid', messages.getMessagesByConversationId)
@@ -27,16 +29,9 @@ database.connect()
             .add(patternPin + ',cmd:getconversationsbyuser', conversations.getConversationsByUserId)
             .add(patternPin + ',cmd:getconversationbyid', conversations.getConversationById)
             .add(patternPin + ',cmd:ackConverstaion', conversations.ackConversation)
-            //.act({
-            //    role: 'messenger',
-            //    cmd: 'ackConverstaion',
-            //    data: {
-            //        'user_id': 'unknown',
-            //        'conversation_id': '568abfde30c3a96b1c7f4f63',
-            //        'last_read': Date.now()
-            //    }
-            //}, function(err, data) {
-            //    console.log(err || data);
-            //})
-            .listen({type: 'tcp', port: 7003, pin: 'role:messenger'});
+
+            .listen({type: 'tcp', port: 7003, pin: 'role:messenger'})
+            .wrap(patternPin, util.reporter.report);
+
+
     });
