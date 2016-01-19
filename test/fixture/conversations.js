@@ -96,4 +96,35 @@ fixtures.getConversationByIdResponse = {
 };
 
 
+fixtures.ackConversation = {
+    role: 'messenger',
+    cmd: 'ackConversation',
+    data: {
+        'conversation_id': '5676d9bc4144f360085f0fa8',
+        'user_id': '11a2ae383bf25eefde31b13860842353',
+        'last_read': 0
+    }
+};
+
+fixtures.ackConversationNotFound = {
+    role: 'messenger',
+    cmd: 'ackConversation',
+    data: {
+        'conversation_id': '5676d9bc4144f360085f0fa7',
+        'user_id': '11a2ae383bf25eefde31b13860842353',
+        'last_read': 0
+    }
+};
+
+fixtures.ackConversationInvalidConversationId = {
+    role: 'messenger',
+    cmd: 'ackConversation',
+    data: {
+        'conversation_id': 'qwertz',
+        'user_id': '11a2ae383bf25eefde31b13860842353',
+        'last_read': 0
+    }
+};
+
+
 module.exports = fixtures;
