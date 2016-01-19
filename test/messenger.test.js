@@ -142,3 +142,35 @@ test('conversations.getConversationById with crappy data', t => {
         t.is(void 0, data);
     });
 });
+
+test('conversations.ackConversation with valid conversation_id', t => {
+    conversations.ackConversation(conversationFixtures.ackConversation, (err, data) => {
+        t.is(null, err);
+        t.is('something', data);
+    });
+});
+
+
+test('conversations.ackConversation with invalid conversation_id', t => {
+    conversations.ackConversation(conversationFixtures.ackConversationInvalidConversationId, (err, data) => {
+        t.is('Error', err.name);
+        t.is('Invalid conversation_id', err.message);
+        t.is(void 0, data);
+    });
+});
+
+
+test('conversations.ackConversation with invalid schema', t => {
+    conversations.ackConversation(conversationFixtures.conversationsUserId, (err, data) => {
+        t.is('ValidationError', err.name);
+        t.is(void 0, data);
+    });
+});
+
+test('conversations.ackConversation not found', t => {
+    conversations.ackConversation(conversationFixtures.ackConversationNotFound, (err, data) => {
+        t.is('Error', err.name);
+        t.is('not found', err.message);
+        t.is(void 0, data);
+    });
+});
