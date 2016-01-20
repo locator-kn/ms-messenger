@@ -7,7 +7,8 @@
     "test": "ava",
     "coveralls": "nyc --all npm test && nyc report --reporter=text-lcov | coveralls",
     "documentation": "documentation index.js -o docs/ -f html -g",
-    "gendocs": "./generate_docs.sh"
+    "gendocs": "./generate_docs.sh",
+    "jshint": "jshint --exclude ./node_modules ."
   },
   "author": "",
   "license": "MIT",
@@ -39,5 +40,8 @@
         "**/*.js"
       ]
     }
-  }
+  },
+  "pre-commit": [
+    "jshint"
+  ]
 }
