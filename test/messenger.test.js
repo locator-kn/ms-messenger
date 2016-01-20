@@ -40,7 +40,7 @@ test('messages.newLocationMessage with text message', t => {
 
 
 test('messages.getMessagesByConversationId', t => {
-    messages.getMessagesByConversationId(messageFixtures.messagesByConversationIdQuery, (err, data) => {
+    messages.getMessagesByConversationId(messageFixtures.messagesByConversationIdQuery, (err) => {
         t.notOk(err);
     });
 });
@@ -78,7 +78,7 @@ test('messages.getLatestMessagesByDistinctConversation without query', t => {
 
 
 test('messages.getLatestMessagesByDistinctConversation with invalid query', t => {
-    messages.getLatestMessagesByDistinctConversation({data: {}}, (err, data) => {
+    messages.getLatestMessagesByDistinctConversation({data: {}}, (err) => {
         t.ok(err);
         t.is(err.name, 'ValidationError');
 

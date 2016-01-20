@@ -6,7 +6,7 @@ const messageFixtures = require('../fixture/messages');
 
 const util = require('ms-utilities');
 
-fns.insertOne = (message, collection) => {
+fns.insertOne = (message) => {
     if (message.participants && message.participants.length) {
         message._id = '5673ee68d3f839675dc860ec';
         return Promise.resolve(message);
@@ -23,7 +23,7 @@ fns.findConversationsByUser = (query) => {
 };
 
 
-fns.findById = (id, collectionId) => {
+fns.findById = (id) => {
     if(conversationFixtures.getConversationByIdResponse._id === id) {
 
         return Promise.resolve([conversationFixtures.getConversationByIdResponse]);
@@ -41,7 +41,7 @@ fns.findMessagesByConversationId = (id) => {
 };
 
 
-fns.findLatestMessagesByDistinctConversation = (user_id, query) => {
+fns.findLatestMessagesByDistinctConversation = (user_id) => {
     if(messageFixtures.latestMessagesWithCountQuery.data.user_id === user_id) {
 
         return Promise.resolve(messageFixtures.latestMessagesWithCountResponse);
@@ -50,9 +50,9 @@ fns.findLatestMessagesByDistinctConversation = (user_id, query) => {
     }
 };
 
-fns.acknowledgeConversation = (conversationId, userId, lastRead) => {
+fns.acknowledgeConversation = (conversationId) => {
     return util.safeObjectId(conversationId, 'conversation_id')
-        .then(objectId => {
+        .then(() => {
             if(conversationId === conversationFixtures.ackConversation.data.conversation_id) {
                 return {value:'something'};
             }

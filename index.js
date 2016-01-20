@@ -11,7 +11,7 @@ const database = require('./lib/database');
 const util = require('ms-utilities');
 
 // select desired transport method
-const transportMethod = process.env['SENECA_TRANSPORT_METHOD'] || 'rabbitmq';
+//const transportMethod = process.env['SENECA_TRANSPORT_METHOD'] || 'rabbitmq';
 const patternPin = 'role:messenger';
 
 // init database and then seneca and expose functions
