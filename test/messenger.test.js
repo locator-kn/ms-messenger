@@ -92,7 +92,6 @@ test('conversations.newConversation with 2 participants', t => {
         let expected = conversationFixtures.twoParticipants.data;
         expected.participants[1].last_read = 0;
         expected._id = '5673ee68d3f839675dc860ec';
-
         t.notOk(err);
         t.ok(data);
         t.same(expected, data);

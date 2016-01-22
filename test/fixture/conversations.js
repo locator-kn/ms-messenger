@@ -7,10 +7,10 @@ fixtures.twoParticipants = {
     cmd: 'newconversation',
     data: {
         participants: [{
-            'user_id': '11a2ae383bf25eefde31b13860842353',
+            'user_id': '569159ebbf125cbb23aadb18',
             last_read: 123123123
         }, {
-            'user_id': '11a2ae383bf25eefde31b13860842353'
+            'user_id': '569159ebbf125cbb23aadb18'
         }]
     }
 };

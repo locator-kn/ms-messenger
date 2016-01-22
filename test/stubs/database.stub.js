@@ -32,6 +32,17 @@ fns.findById = (id) => {
     }
 };
 
+
+fns.countByIds = (ids, collectionId) => {
+    if(!collectionId) {
+        return Promise.reject();
+    }
+    let promises = ids.map(id => util.safeObjectId(id, collectionId + '_id'));
+
+    return Promise.all(promises)
+        .then(oIds => oIds.length);
+};
+
 fns.findMessagesByConversationId = (id) => {
     if(messageFixtures.messagesByConversationIdQuery.data.conversation_id === id) {
         return Promise.resolve([conversationFixtures.getConversationByIdResponse]);
