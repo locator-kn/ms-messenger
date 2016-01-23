@@ -29,7 +29,18 @@ database.connect()
             .add(patternPin + ',cmd:getconversationsbyuser', conversations.getConversationsByUserId)
             .add(patternPin + ',cmd:getconversationbyid', conversations.getConversationById)
             .add(patternPin + ',cmd:ackConverstaion', conversations.ackConversation)
-
+            //.act({
+            //    role:'messenger',
+            //    cmd:'newmessage',
+            //    message_type: 'text',
+            //    data: {
+            //        message: '/giphy test',
+            //        conversation_id: '56786fffbfef1e6033b62ed2',
+            //        from: '56786fffbfef1e6033b62ed2'
+            //    }
+            //}, function(err, data) {
+            //    console.log(err || data);
+            //})
             .listen({type: 'tcp', port: 7003, pin: 'role:messenger'})
             .wrap(patternPin, util.reporter.report);
 
