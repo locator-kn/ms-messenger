@@ -4,10 +4,11 @@ const proxyquire =  require('proxyquire');
 const Hoek = require('hoek');
 
 const databaseStub = require('./stubs/database.stub');
+const messagesHelperStub = require('./stubs/messagesHelper.stub');
 const messageFixtures = require('./fixture/messages');
 const conversationFixtures = require('./fixture/conversations');
 
-const messages = proxyquire('../lib/messages', { './database': databaseStub });
+const messages = proxyquire('../lib/messages', { './database': databaseStub, './helper': messagesHelperStub });
 const conversations = proxyquire('../lib/conversations', { './database': databaseStub });
 
 test('messages.newTextMessage', t => {
