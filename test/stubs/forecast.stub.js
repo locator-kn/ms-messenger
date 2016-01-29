@@ -9,5 +9,6 @@ fns.get = (message, callback) => {
     }
 };
 
-
-module.exports = fns;
+module.exports = function Forecast() {
+    return fns;
+};
