@@ -12,30 +12,30 @@ const messages = proxyquire('../lib/messages', { './database': databaseStub, './
 const conversations = proxyquire('../lib/conversations', { './database': databaseStub });
 
 test('messages.newTextMessage', t => {
-    messages.newTextMessage(messageFixtures.textMessagePass, (err, data) => {
+    messages.newTextMessage(messageFixtures.textMessagePass, (err, responseData) => {
         t.is(null, err);
-        t.is(data._id, '5673ee68d3f839675dc860ec');
+        t.is(responseData._id, '5673ee68d3f839675dc860ec');
     });
 });
 
 test('messages.newTextMessage with location message', t => {
-    messages.newTextMessage(messageFixtures.locationMessagePass, (err, data) => {
+    messages.newTextMessage(messageFixtures.locationMessagePass, (err, responseData) => {
         t.is('ValidationError', err.name);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
 test('messages.newLocationMessage', t => {
-    messages.newLocationMessage(messageFixtures.locationMessagePass, (err, data) => {
+    messages.newLocationMessage(messageFixtures.locationMessagePass, (err, responseData) => {
         t.is(null, err);
-        t.is(data._id, '5673ee68d3f839675dc860ec');
+        t.is(responseData._id, '5673ee68d3f839675dc860ec');
     });
 });
 
 test('messages.newLocationMessage with text message', t => {
-    messages.newLocationMessage(messageFixtures.textMessagePass, (err, data) => {
+    messages.newLocationMessage(messageFixtures.textMessagePass, (err, responseData) => {
         t.is('ValidationError', err.name);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
@@ -47,39 +47,39 @@ test('messages.getMessagesByConversationId', t => {
 });
 
 test('messages.getMessagesByConversationId with random query', t => {
-    messages.getMessagesByConversationId(messageFixtures.textMessagePass, (err, data) => {
+    messages.getMessagesByConversationId(messageFixtures.textMessagePass, (err, responseData) => {
         t.is('ValidationError', err.name);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
 
 test('messages.getLatestMessagesByDistinctConversation with query', t => {
-    messages.getLatestMessagesByDistinctConversation(messageFixtures.latestMessagesWithCountQuery, (err, data) => {
+    messages.getLatestMessagesByDistinctConversation(messageFixtures.latestMessagesWithCountQuery, (err, responseData) => {
         t.notOk(err);
 
-        t.is(messageFixtures.latestMessagesWithCountQuery.data.query.count, data.length);
-        t.true(data[0].timestamp > data[1].timestamp);
-        t.true(data[0].timestamp > data[data.length - 1].timestamp);
+        t.is(messageFixtures.latestMessagesWithCountQuery.responseData.query.count, responseData.length);
+        t.true(responseData[0].timestamp > responseData[1].timestamp);
+        t.true(responseData[0].timestamp > responseData[responseData.length - 1].timestamp);
     });
 });
 
 
 test('messages.getLatestMessagesByDistinctConversation without query', t => {
     let latest = Hoek.clone(messageFixtures.latestMessagesWithCountQuery);
-    delete latest.data.query;
-    messages.getLatestMessagesByDistinctConversation(latest, (err, data) => {
+    delete latest.responseData.query;
+    messages.getLatestMessagesByDistinctConversation(latest, (err, responseData) => {
         t.notOk(err);
 
-        t.is(3, data.length);
-        t.true(data[0].timestamp > data[1].timestamp);
-        t.true(data[0].timestamp > data[data.length - 1].timestamp);
+        t.is(3, responseData.length);
+        t.true(responseData[0].timestamp > responseData[1].timestamp);
+        t.true(responseData[0].timestamp > responseData[responseData.length - 1].timestamp);
     });
 });
 
 
 test('messages.getLatestMessagesByDistinctConversation with invalid query', t => {
-    messages.getLatestMessagesByDistinctConversation({data: {}}, (err) => {
+    messages.getLatestMessagesByDistinctConversation({responseData: {}}, (err) => {
         t.ok(err);
         t.is(err.name, 'ValidationError');
 
@@ -89,88 +89,88 @@ test('messages.getLatestMessagesByDistinctConversation with invalid query', t =>
 // Conversations
 
 test('conversations.newConversation with 2 participants', t => {
-    conversations.newConversation(conversationFixtures.twoParticipants, (err, data) => {
-        let expected = conversationFixtures.twoParticipants.data;
+    conversations.newConversation(conversationFixtures.twoParticipants, (err, responseData) => {
+        let expected = conversationFixtures.twoParticipants.responseData;
         expected.participants[1].last_read = 0;
         expected._id = '5673ee68d3f839675dc860ec';
         t.notOk(err);
-        t.ok(data);
-        t.same(expected, data);
+        t.ok(responseData);
+        t.same(expected, responseData);
     });
 });
 
 test('conversations.newConversation with 2 participants but missing user_id', t => {
-    conversations.newConversation(conversationFixtures.twoParticipantsMissingUserId, (err, data) => {
+    conversations.newConversation(conversationFixtures.twoParticipantsMissingUserId, (err, responseData) => {
 
         t.is('ValidationError', err.name);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
 test('conversations.getConversationsByUserId with valid user_id', t => {
-    conversations.getConversationsByUserId(conversationFixtures.conversationsUserId, (err, data) => {
+    conversations.getConversationsByUserId(conversationFixtures.conversationsUserId, (err, responseData) => {
 
         t.notOk(err);
-        t.is(data.length, conversationFixtures.getConversationsResponse.length);
+        t.is(responseData.length, conversationFixtures.getConversationsResponse.length);
     });
 });
 
 test('conversations.getConversationsByUserId with invalid user_id', t => {
-    conversations.getConversationsByUserId({data: {wrong_key: 'guga'}}, (err, data) => {
+    conversations.getConversationsByUserId({responseData: {wrong_key: 'guga'}}, (err, responseData) => {
 
         t.is('ValidationError', err.name);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
 test('conversations.getConversationById with valid conversation_id', t => {
-    conversations.getConversationById(conversationFixtures.getConversationByIdWithResult, (err, data) => {
-        t.is(conversationFixtures.getConversationByIdWithResult.data.conversation_id, data._id);
+    conversations.getConversationById(conversationFixtures.getConversationByIdWithResult, (err, responseData) => {
+        t.is(conversationFixtures.getConversationByIdWithResult.responseData.conversation_id, responseData._id);
     });
 });
 
 test('conversations.getConversationById with invalid conversation_id', t => {
-    conversations.getConversationById(conversationFixtures.getConversationByIdWithNoResult, (err, data) => {
+    conversations.getConversationById(conversationFixtures.getConversationByIdWithNoResult, (err, responseData) => {
         t.is('not found', err.message);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
-test('conversations.getConversationById with crappy data', t => {
-    conversations.getConversationById({data: {crappy: 'data'}}, (err, data) => {
+test('conversations.getConversationById with crappy responseData', t => {
+    conversations.getConversationById({responseData: {crappy: 'responseData'}}, (err, responseData) => {
         t.is('ValidationError', err.name);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
 test('conversations.ackConversation with valid conversation_id', t => {
-    conversations.ackConversation(conversationFixtures.ackConversation, (err, data) => {
+    conversations.ackConversation(conversationFixtures.ackConversation, (err, responseData) => {
         t.is(null, err);
-        t.is('something', data);
+        t.is('something', responseData);
     });
 });
 
 
 test('conversations.ackConversation with invalid conversation_id', t => {
-    conversations.ackConversation(conversationFixtures.ackConversationInvalidConversationId, (err, data) => {
+    conversations.ackConversation(conversationFixtures.ackConversationInvalidConversationId, (err, responseData) => {
         t.is('Error', err.name);
         t.is('Invalid conversation_id', err.message);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
 
 test('conversations.ackConversation with invalid schema', t => {
-    conversations.ackConversation(conversationFixtures.conversationsUserId, (err, data) => {
+    conversations.ackConversation(conversationFixtures.conversationsUserId, (err, responseData) => {
         t.is('ValidationError', err.name);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
 
 test('conversations.ackConversation not found', t => {
-    conversations.ackConversation(conversationFixtures.ackConversationNotFound, (err, data) => {
+    conversations.ackConversation(conversationFixtures.ackConversationNotFound, (err, responseData) => {
         t.is('Error', err.name);
         t.is('not found', err.message);
-        t.is(void 0, data);
+        t.is(void 0, responseData);
     });
 });
