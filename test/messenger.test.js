@@ -134,7 +134,7 @@ test('conversations.getConversationById with valid conversation_id', t => {
 
 test('conversations.getConversationById with invalid conversation_id', t => {
     conversations.getConversationById(conversationFixtures.getConversationByIdWithNoResult, (err, responseData) => {
-        t.is('NOT_FOUND', responseData.err);
+        t.is('NOT_FOUND', responseData.err.msg);
         t.is(null, err);
     });
 });
