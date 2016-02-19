@@ -9,7 +9,7 @@ sudo: required
 
 before_install:
   chmod +x ./travis_before_install.sh
-  sudo ./travis_before_install.sh
+  /bin/bash ./travis_before_install.sh
 
 after_success:
   npm run coveralls
