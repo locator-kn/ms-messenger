@@ -128,7 +128,7 @@ test('conversations.getConversationsByUserId with invalid user_id', t => {
 
 test('conversations.getConversationById with valid conversation_id', t => {
     conversations.getConversationById(conversationFixtures.getConversationByIdWithResult, (err, responseData) => {
-        t.is(conversationFixtures.getConversationByIdWithResult.responseData.conversation_id, responseData.data._id);
+        t.is(conversationFixtures.getConversationByIdWithResult.data.conversation_id, responseData.data._id);
     });
 });
 
