@@ -5,6 +5,8 @@ node_js:
   - "4.2"
   - "5.3"
 
+sudo: required
+
 before_install: ./travis_before_install.sh
 
 after_success:
