@@ -7,7 +7,9 @@ node_js:
 
 sudo: required
 
-before_install: sudo ./travis_before_install.sh
+before_install:
+  chmod +x ./travis_before_install.sh
+  sudo ./travis_before_install.sh
 
 after_success:
   npm run coveralls
