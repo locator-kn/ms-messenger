@@ -26,9 +26,9 @@ fns.findConversationsByUser = (query) => {
 fns.findById = (id) => {
     if(conversationFixtures.getConversationByIdResponse._id === id) {
 
-        return Promise.resolve([conversationFixtures.getConversationByIdResponse]);
+        return Promise.resolve(conversationFixtures.getConversationByIdResponse);
     } else {
-        return Promise.resolve([]);
+        return Promise.resolve(null);
     }
 };
 
