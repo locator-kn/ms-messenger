@@ -4,6 +4,10 @@ const path = require('path');
 const pwd = path.join(__dirname, '..', '/.env');
 require('dotenv').config({path: pwd});
 
+require('opbeat').start({
+    appId: '575bf23680'
+});
+
 const seneca = require('seneca')();
 const messages = require('./lib/messages');
 const conversations = require('./lib/conversations');
