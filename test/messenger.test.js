@@ -14,7 +14,7 @@ const conversations = proxyquire('../lib/conversations', { './database': databas
 test('messages.newTextMessage', t => {
     messages.newTextMessage(messageFixtures.textMessagePass, (err, responseData) => {
         t.is(null, err);
-        t.is(responseData._id, '5673ee68d3f839675dc860ec');
+        t.is(responseData.data._id, '5673ee68d3f839675dc860ec');
     });
 });
 
@@ -28,7 +28,7 @@ test('messages.newTextMessage with location message', t => {
 test('messages.newLocationMessage', t => {
     messages.newLocationMessage(messageFixtures.locationMessagePass, (err, responseData) => {
         t.is(null, err);
-        t.is(responseData._id, '5673ee68d3f839675dc860ec');
+        t.is(responseData.data._id, '5673ee68d3f839675dc860ec');
     });
 });
 
@@ -56,30 +56,33 @@ test('messages.getMessagesByConversationId with random query', t => {
 
 test('messages.getLatestMessagesByDistinctConversation with query', t => {
     messages.getLatestMessagesByDistinctConversation(messageFixtures.latestMessagesWithCountQuery, (err, responseData) => {
+        t.ok(responseData);
         t.notOk(err);
 
-        t.is(messageFixtures.latestMessagesWithCountQuery.responseData.query.count, responseData.length);
-        t.true(responseData[0].timestamp > responseData[1].timestamp);
-        t.true(responseData[0].timestamp > responseData[responseData.length - 1].timestamp);
+        t.is(responseData.data.length, messageFixtures.latestMessagesWithCountQuery.data.query.count);
+        t.true(responseData.data[0].timestamp > responseData.data[1].timestamp);
+        t.true(responseData.data[0].timestamp > responseData.data[responseData.data.length - 1].timestamp);
     });
 });
 
 
 test('messages.getLatestMessagesByDistinctConversation without query', t => {
     let latest = Hoek.clone(messageFixtures.latestMessagesWithCountQuery);
-    delete latest.responseData.query;
+    delete latest.data.query;
     messages.getLatestMessagesByDistinctConversation(latest, (err, responseData) => {
+
+        t.ok(responseData);
         t.notOk(err);
 
-        t.is(3, responseData.length);
-        t.true(responseData[0].timestamp > responseData[1].timestamp);
-        t.true(responseData[0].timestamp > responseData[responseData.length - 1].timestamp);
+        t.is(3, responseData.data.length);
+        t.true(responseData.data[0].timestamp > responseData.data[1].timestamp);
+        t.true(responseData.data[0].timestamp > responseData.data[responseData.data.length - 1].timestamp);
     });
 });
 
 
 test('messages.getLatestMessagesByDistinctConversation with invalid query', t => {
-    messages.getLatestMessagesByDistinctConversation({responseData: {}}, (err) => {
+    messages.getLatestMessagesByDistinctConversation({data: {}}, (err) => {
         t.ok(err);
         t.is(err.name, 'ValidationError');
 
@@ -90,12 +93,12 @@ test('messages.getLatestMessagesByDistinctConversation with invalid query', t =>
 
 test('conversations.newConversation with 2 participants', t => {
     conversations.newConversation(conversationFixtures.twoParticipants, (err, responseData) => {
-        let expected = conversationFixtures.twoParticipants.responseData;
+        let expected = conversationFixtures.twoParticipants.data;
         expected.participants[1].last_read = 0;
         expected._id = '5673ee68d3f839675dc860ec';
         t.notOk(err);
         t.ok(responseData);
-        t.same(expected, responseData);
+        t.same(expected, responseData.data);
     });
 });
 
@@ -111,12 +114,12 @@ test('conversations.getConversationsByUserId with valid user_id', t => {
     conversations.getConversationsByUserId(conversationFixtures.conversationsUserId, (err, responseData) => {
 
         t.notOk(err);
-        t.is(responseData.length, conversationFixtures.getConversationsResponse.length);
+        t.is(responseData.data.length, conversationFixtures.getConversationsResponse.length);
     });
 });
 
 test('conversations.getConversationsByUserId with invalid user_id', t => {
-    conversations.getConversationsByUserId({responseData: {wrong_key: 'guga'}}, (err, responseData) => {
+    conversations.getConversationsByUserId({data: {wrong_key: 'guga'}}, (err, responseData) => {
 
         t.is('ValidationError', err.name);
         t.is(void 0, responseData);
@@ -125,7 +128,7 @@ test('conversations.getConversationsByUserId with invalid user_id', t => {
 
 test('conversations.getConversationById with valid conversation_id', t => {
     conversations.getConversationById(conversationFixtures.getConversationByIdWithResult, (err, responseData) => {
-        t.is(conversationFixtures.getConversationByIdWithResult.responseData.conversation_id, responseData._id);
+        t.is(conversationFixtures.getConversationByIdWithResult.responseData.conversation_id, responseData.data._id);
     });
 });
 
@@ -137,7 +140,7 @@ test('conversations.getConversationById with invalid conversation_id', t => {
 });
 
 test('conversations.getConversationById with crappy responseData', t => {
-    conversations.getConversationById({responseData: {crappy: 'responseData'}}, (err, responseData) => {
+    conversations.getConversationById({data: {crappy: 'responseData'}}, (err, responseData) => {
         t.is('ValidationError', err.name);
         t.is(void 0, responseData);
     });
@@ -146,7 +149,7 @@ test('conversations.getConversationById with crappy responseData', t => {
 test('conversations.ackConversation with valid conversation_id', t => {
     conversations.ackConversation(conversationFixtures.ackConversation, (err, responseData) => {
         t.is(null, err);
-        t.is('something', responseData);
+        t.is('something', responseData.data);
     });
 });
 
