@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^1.2.0",
-    "forecast": "^0.2.1",
+    "forecast": "^0.3.1",
     "giphy-api": "^1.1.11",
     "joi": "^7.1.0",
     "mongodb": "^2.1.3",
