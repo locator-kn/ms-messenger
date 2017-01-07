@@ -13,7 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^1.2.0",
+    "dotenv": "^3.0.0",
     "forecast": "^0.2.1",
     "giphy-api": "^1.1.11",
     "joi": "^7.1.0",
